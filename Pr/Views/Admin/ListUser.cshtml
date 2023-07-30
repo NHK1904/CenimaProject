@@ -1,0 +1,76 @@
+﻿@model IEnumerable<PRNFinalProject.Models.Person>
+
+@{
+    ViewData["Title"] = "ListUser";
+}
+
+
+<h1>ListUser</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Fullname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.Fullname
+            </td>
+            <td>
+                @item.Gender
+            </td>
+            <td>
+                @item.Email
+            </td>
+            <td>
+                @item.Password
+            </td>
+            @if (@item.Type == 1)
+            {
+                <td>
+                    Admin
+                </td>
+            }
+            else
+            {
+                <td>
+                    User
+                </td>
+            }
+
+        <td>
+            <div class="@item.IsActive">
+                <form asp-controller="Admin" asp-action="ListUser" method="post" class="tag tag-success">
+                    <input name="Id" type="hidden" value="@item.PersonId">
+                            <button type="submit" name="statusid" value="@item.IsActive">@(item.IsActive == false ? "Disable" : "Enable")</button>
+                </form>
+            </div>
+        </td>
+        </tr>
+}
+    </tbody>
+</table>
